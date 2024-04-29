@@ -65,31 +65,37 @@ export class SinglyLinkedList {
     }
 
     shift() {
-        if (!this.head || !this.tail) {
+        if (this.length === 0) {
             return undefined;
         }
 
-        const oldHead = this.head;
-        this.head = this.head.next;
-        this.length--;
+        const oldHead = this.head!;
 
-        if (this.length === 0) {
+        if (this.length === 1) {
+            this.head = null;
             this.tail = null;
+        } else {
+            this.head = oldHead.next;
+            oldHead.next = null; // cleanup
         }
+
+        this.length--;
 
         return oldHead;
     }
 
     unshift(value: unknown) {
         const newNode = new SinglyLinkedListNode(value);
-        const oldHead = this.head;
-        this.head = newNode;
 
         if (this.length === 0) {
+            this.head = newNode;
             this.tail = newNode;
+        } else {
+            const oldHead = this.head;
+            this.head = newNode;
+            this.head.next = oldHead;
         }
 
-        this.head.next = oldHead;
         this.length++;
         return this;
     }
@@ -161,28 +167,27 @@ export class SinglyLinkedList {
     }
 
     reverse() {
-        if (this.head === null || this.head === this.tail) {
+        if (this.length === 0 || this.length === 1) {
             return this;
         }
 
+        let current = this.head!;
         let temp: SinglyLinkedListNode | null;
         let prev: SinglyLinkedListNode | null = null;
-        let current = this.head;
 
-        this.head = this.tail; // swap head and tail (set a new head to be an old tail)
-        this.tail = current; // swap head and tail (set a new tail to be an old head)
-
-        // original list: 1->2->3
-        // init     : 1->2  prev=null  curr=1  temp=undefined     i=0
-        // after 1st: 2->1  prev=1     curr=2  temp=3             i=1
-        // after 2nd: 3->2  prev=2     curr=3  temp=null          i=2
-
-        // eslint-disable-next-line
-        for (let i = 0; i < this.length; i++) {
+        while (current) {
             temp = current.next; // before updating next pointer for a current node save `current.next` to a `temp` variable
             current.next = prev; // update next pointer
             prev = current; // make `current` (with already updated next pointer) a new `prev`
-            current = temp!; // finally set a new `current` to `temp` (an old `current.next`)
+
+            if (!temp) {
+                // when at the end of the list, swap the head and the tail and stop the loop
+                this.tail = this.head;
+                this.head = current;
+                break;
+            }
+
+            current = temp; // otherwise set new `current` to `temp` (an old `current.next`) and perform the next iteration
         }
 
         return this;
