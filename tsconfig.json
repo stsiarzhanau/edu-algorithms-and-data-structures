@@ -1,9 +1,5 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "lib": ["esnext"],
-        "strict": true
-    },
-    "include": ["**/*.ts"],
+    "extends": "@tsconfig/node20/tsconfig.json",
+    "include": ["**/*.ts", "vitest.config.mts"],
     "exclude": ["node_modules"]
 }
