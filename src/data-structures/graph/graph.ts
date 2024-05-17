@@ -70,4 +70,98 @@ export class Graph {
         this.adjacencyList[vertex].forEach((v) => this.removeEdge(v, vertex));
         delete this.adjacencyList[vertex];
     }
+
+    DFSRecursive(startVertex: string) {
+        if (!startVertex) {
+            throw new Error(
+                'You must specify the vertex to start traversal from',
+            );
+        }
+
+        if (!this.adjacencyList[startVertex]) {
+            throw new Error("Specified start vertex doesn't exist");
+        }
+
+        const data: string[] = [];
+        const visited: Record<string, boolean> = {};
+
+        const traverse = (vertex: string) => {
+            visited[vertex] = true;
+            data.push(vertex);
+
+            this.adjacencyList[vertex].forEach((neighbour) => {
+                if (!visited[neighbour]) {
+                    traverse(neighbour);
+                }
+            });
+        };
+
+        traverse(startVertex);
+
+        return data;
+    }
+
+    DFSIterative(startVertex: string) {
+        if (!startVertex) {
+            throw new Error(
+                'You must specify the vertex to start traversal from',
+            );
+        }
+
+        if (!this.adjacencyList[startVertex]) {
+            throw new Error("Specified start vertex doesn't exist");
+        }
+
+        const data: string[] = [];
+        const visited: Record<string, boolean> = {};
+        const stack = [startVertex];
+        visited[startVertex] = true;
+        let vertex: string;
+
+        while (stack.length) {
+            vertex = stack.pop()!;
+            data.push(vertex);
+
+            this.adjacencyList[vertex].forEach((neighbour) => {
+                if (!visited[neighbour]) {
+                    visited[neighbour] = true;
+                    stack.push(neighbour);
+                }
+            });
+        }
+
+        return data;
+    }
+
+    BFS(startVertex: string) {
+        if (!startVertex) {
+            throw new Error(
+                'You must specify the vertex to start traversal from',
+            );
+        }
+
+        if (!this.adjacencyList[startVertex]) {
+            throw new Error("Specified start vertex doesn't exist");
+        }
+
+        const data: string[] = [];
+        const visited: Record<string, boolean> = {};
+        const queue = [startVertex];
+        visited[startVertex] = true;
+        let vertex: string;
+
+        while (queue.length) {
+            vertex = queue.shift()!;
+            data.push(vertex);
+
+            this.adjacencyList[vertex].forEach((neighbour) => {
+                if (!visited[neighbour]) {
+                    visited[neighbour] = true;
+                    queue.push(neighbour);
+                }
+            });
+        }
+
+        return data;
+    }
 }

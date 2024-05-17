@@ -176,4 +176,101 @@ describe('Graph', () => {
             });
         });
     });
+
+    describe('traversal methods', () => {
+        /**
+         *   ------------ A -------------
+         *   |                           |
+         *   B                           C
+         *   |                           |
+         *   D ------------------------- E
+         *   |                           |
+         *   ------------ F --------------
+         */
+
+        beforeEach(() => {
+            graph = new Graph();
+            graph.addVertex('A');
+            graph.addVertex('B');
+            graph.addVertex('C');
+            graph.addVertex('D');
+            graph.addVertex('E');
+            graph.addVertex('F');
+
+            graph.addEdge('A', 'B');
+            graph.addEdge('A', 'C');
+            graph.addEdge('B', 'D');
+            graph.addEdge('C', 'E');
+            graph.addEdge('D', 'E');
+            graph.addEdge('D', 'F');
+            graph.addEdge('E', 'F');
+        });
+
+        describe('DFSRecursive', () => {
+            it('should visit all vertices in correct order', () => {
+                expect(graph.DFSRecursive('A')).toEqual([
+                    'A',
+                    'B',
+                    'D',
+                    'E',
+                    'C',
+                    'F',
+                ]);
+            });
+
+            it('should throw error if the vertex to start traversal from is not specified', () => {
+                // @ts-expect-error DFSRecursive expects 1 argument
+                expect(() => graph.DFSRecursive()).toThrow(/You must specify/i);
+            });
+
+            it("should throw error if specified start vertex doesn't exist", () => {
+                graph = new Graph();
+                graph.addVertex('A');
+                expect(() => graph.DFSRecursive('B')).toThrowError(
+                    /specified start vertex doesn't exist/i,
+                );
+            });
+        });
+
+        describe('DFSIterative', () => {
+            it('should visit all vertices in correct order', () => {
+                expect(graph.DFSIterative('A')).toEqual([
+                    'A',
+                    'C',
+                    'E',
+                    'F',
+                    'D',
+                    'B',
+                ]);
+            });
+
+            it('should throw error if the vertex to start traversal from is not specified', () => {
+                // @ts-expect-error DFSIterative expects 1 argument
+                expect(() => graph.DFSIterative()).toThrow(/you must specify/i);
+            });
+
+            it("should throw error if specified start vertex doesn't exist", () => {
+                expect(() => graph.DFSIterative('G')).toThrowError(
+                    /specified start vertex doesn't exist/i,
+                );
+            });
+        });
+
+        describe('BFS', () => {
+            it('should visit all vertices in correct order', () => {
+                expect(graph.BFS('A')).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
+            });
+
+            it('should throw error if the vertex to start traversal from is not specified', () => {
+                // @ts-expect-error DFSIterative expects 1 argument
+                expect(() => graph.BFS()).toThrow(/you must specify/i);
+            });
+
+            it("should throw error if specified start vertex doesn't exist", () => {
+                expect(() => graph.BFS('G')).toThrowError(
+                    /specified start vertex doesn't exist/i,
+                );
+            });
+        });
+    });
 });
