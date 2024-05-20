@@ -17,7 +17,6 @@ export class BinarySearchTree {
 
         let current: BinarySearchTreeNode = this.root;
 
-        // eslint-disable-next-line
         while (true) {
             if (value === current.value) {
                 return false; // handle duplicates

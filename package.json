@@ -15,18 +15,19 @@
         "format:check": "prettier . --ignore-unknown --check"
     },
     "devDependencies": {
-        "@eslint/js": "^9.2.0",
+        "@eslint/js": "^9.3.0",
         "@tsconfig/node20": "^20.1.4",
+        "@types/eslint-config-prettier": "^6.11.3",
         "@types/node": "^20.12.12",
         "@vitest/coverage-v8": "^1.6.0",
         "@vitest/ui": "^1.6.0",
-        "eslint": "^8.57.0",
+        "eslint": "^9.3.0",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-vitest": "^0.4.1",
+        "eslint-plugin-vitest": "^0.5.4",
         "jest-extended": "^4.0.2",
         "prettier": "^3.2.5",
         "typescript": "^5.4.5",
-        "typescript-eslint": "^7.9.0",
+        "typescript-eslint": "8.0.0-alpha.14",
         "vitest": "^1.6.0"
     },
     "engines": {

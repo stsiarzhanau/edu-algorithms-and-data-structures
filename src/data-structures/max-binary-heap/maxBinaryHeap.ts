@@ -38,7 +38,6 @@ export class MaxBinaryHeap {
         this.values[0] = last;
         let index = 0;
 
-        // eslint-disable-next-line
         while (true) {
             const leftChildIndex = 2 * index + 1;
             const rightChildIndex = 2 * index + 2;
