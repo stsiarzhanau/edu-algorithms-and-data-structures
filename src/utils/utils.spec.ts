@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import { removeItemWithSlice } from './utils';
+import { removeItemWithSlice, swap } from '.';
 
 describe('removeItemWithSlice', () => {
     it('should remove item wiht the specified index from the specified array and return the new array', () => {
@@ -13,5 +13,13 @@ describe('removeItemWithSlice', () => {
         const arr1 = [6, 4, 13];
         expect(removeItemWithSlice(arr1, -1)).toEqual([6, 4, 13]);
         expect(removeItemWithSlice(arr1, 3)).toEqual([6, 4, 13]);
+    });
+});
+
+describe('swap', () => {
+    it('should take an array and 2 indices and swap array items at that indices', () => {
+        const arr = [4, 6, 8, 10];
+        swap(arr, 1, 2);
+        expect(arr).toEqual([4, 8, 6, 10]);
     });
 });
