@@ -17,10 +17,11 @@ export function fibonacciIterative(n: number): number {
     return a;
 }
 
+// Time complexity O(N) - linear
 export function fibonacciIterative2(n: number) {
     if (n < 2) return n;
 
-    const fibo = [0, 1];
+    const fibo = [0, 1]; // "table" - DP bottom-up approach
 
     for (let i = 2; i <= n; i++) {
         const res = fibo[i - 1] + fibo[i - 2];
@@ -30,12 +31,14 @@ export function fibonacciIterative2(n: number) {
     return fibo[fibo.length - 1];
 }
 
+// Time complexity ~O(1.6^N) - exponential - very bad
 export function fibonacciRecursive(n: number): number {
     if (n <= 1) return n; // Base case: if n <= 1 return n
 
     return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2); // Recursive case: return fibonacci(n-1) + fibonacci(n-2)
 }
 
+// Time complexity O(N) - linear
 export function fibonacciRecursiveWithMemo(n: number): number {
     const memo = new Map<number, number>();
 
